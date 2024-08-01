@@ -295,6 +295,31 @@ class StreamingJobGraphGeneratorTest {
     }
 
     @Test
+    void testTraverseStreamGraphAndGenerateHashes() {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        // The default parallelism of the environment (that is inherited by the source)
+        // and the parallelism of the map operator needs to be different for this test
+        env.setParallelism(4);
+        env.fromSequence(1L, 3L).print();
+        StreamGraph streamGraphA = env.getStreamGraph();
+
+        JobGraph jobGraphA = StreamingJobGraphGenerator.createJobGraph(streamGraphA);
+
+        StreamExecutionEnvironment envB = StreamExecutionEnvironment.getExecutionEnvironment();
+        // The default parallelism of the environment (that is inherited by the source)
+        // and the parallelism of the map operator needs to be different for this test
+        envB.setParallelism(4);
+        envB.fromSequence(1L, 3L).map(i -> i).print().setParallelism(20);
+        StreamGraph streamGraphB = envB.getStreamGraph();
+
+        // check the jobGraph parallelism configured
+
+        JobGraph jobGraphB = StreamingJobGraphGenerator.createJobGraph(streamGraphB);
+    }
+
+
+
+    @Test
     void testTransformationSetMaxParallelism() {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // The max parallelism of the environment (that is inherited by the source)

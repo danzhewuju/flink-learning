@@ -19,6 +19,7 @@ package org.apache.flink.streaming.runtime.tasks;
 
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.annotation.VisibleForTesting;
+import org.apache.flink.api.common.ExecutionConfig;
 import org.apache.flink.api.common.operators.MailboxExecutor;
 import org.apache.flink.api.common.operators.ProcessingTimeService.ProcessingTimeCallback;
 import org.apache.flink.configuration.Configuration;
@@ -54,7 +55,10 @@ import org.apache.flink.runtime.io.network.api.writer.RecordWriterBuilder;
 import org.apache.flink.runtime.io.network.api.writer.RecordWriterDelegate;
 import org.apache.flink.runtime.io.network.api.writer.ResultPartitionWriter;
 import org.apache.flink.runtime.io.network.api.writer.SingleRecordWriter;
+import org.apache.flink.runtime.io.network.metrics.ResultSubPartitionMetrics;
+import org.apache.flink.runtime.io.network.partition.BufferWritingResultPartition;
 import org.apache.flink.runtime.io.network.partition.ChannelStateHolder;
+import org.apache.flink.runtime.io.network.partition.ResultSubpartition;
 import org.apache.flink.runtime.io.network.partition.consumer.IndexedInputGate;
 import org.apache.flink.runtime.io.network.partition.consumer.InputGate;
 import org.apache.flink.runtime.jobgraph.OperatorID;
@@ -1682,14 +1686,39 @@ public abstract class StreamTask<OUT, OP extends StreamOperator<OUT>>
             }
         }
 
+        ExecutionConfig executionConfig = environment.getExecutionConfig();
+
+        if (executionConfig.isBacklogMetricsEnabled()) {
+            registerBacklogMetricsForSubpartitions(environment, outputPartitioner, bufferWriter);
+        }
+
         RecordWriter<SerializationDelegate<StreamRecord<OUT>>> output =
                 new RecordWriterBuilder<SerializationDelegate<StreamRecord<OUT>>>()
+                        .setExecutionConfig(executionConfig)
                         .setChannelSelector(outputPartitioner)
                         .setTimeout(bufferTimeout)
                         .setTaskName(taskNameWithSubtask)
                         .build(bufferWriter);
         output.setMetricGroup(environment.getMetricGroup().getIOMetricGroup());
         return output;
+    }
+
+    private static <OUT> void registerBacklogMetricsForSubpartitions(
+            Environment environment,
+            StreamPartitioner<OUT> outputPartitioner,
+            ResultPartitionWriter bufferWriter) {
+        if (outputPartitioner instanceof RebalancePartitioner) {
+            if (bufferWriter instanceof BufferWritingResultPartition) {
+                int numberOfSubpartitions = bufferWriter.getNumberOfSubpartitions();
+                ResultSubpartition[] subpartitions = new ResultSubpartition[numberOfSubpartitions];
+                for (int i = 0; i < numberOfSubpartitions; i++) {
+                    subpartitions[i] =
+                            ((BufferWritingResultPartition) bufferWriter).getSubpartition(i);
+                }
+                ResultSubPartitionMetrics.registerBacklogMetrics(
+                        environment.getMetricGroup(), subpartitions);
+            }
+        }
     }
 
     private void handleTimerException(Exception ex) {

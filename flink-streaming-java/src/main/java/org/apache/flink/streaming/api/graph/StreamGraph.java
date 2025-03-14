@@ -695,7 +695,7 @@ public class StreamGraph implements Pipeline {
             partitioner =
                     dynamic ? new ForwardForUnspecifiedPartitioner<>() : new ForwardPartitioner<>();
         } else if (partitioner == null) {
-            partitioner = new RebalancePartitioner<Object>();
+            partitioner = new RebalancePartitioner<Object>(executionConfig.isLoadBasedChannelSelectorEnabled());
         }
 
         if (partitioner instanceof ForwardPartitioner) {

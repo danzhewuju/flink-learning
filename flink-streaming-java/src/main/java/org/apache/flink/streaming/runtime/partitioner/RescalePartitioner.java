@@ -47,7 +47,17 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 public class RescalePartitioner<T> extends StreamPartitioner<T> {
     private static final long serialVersionUID = 1L;
 
+    private final boolean loadBasedChannelSelectorEnabled;
+
     private int nextChannelToSendTo = -1;
+
+    public RescalePartitioner() {
+        this(false);
+    }
+
+    public RescalePartitioner(boolean loadBasedChannelSelectorEnabled) {
+        this.loadBasedChannelSelectorEnabled = loadBasedChannelSelectorEnabled;
+    }
 
     @Override
     public int selectChannel(SerializationDelegate<StreamRecord<T>> record) {
@@ -79,5 +89,10 @@ public class RescalePartitioner<T> extends StreamPartitioner<T> {
     @Override
     public boolean isPointwise() {
         return true;
+    }
+
+    @Override
+    public boolean isLoadBasedChannelSelectorEnabled() {
+        return loadBasedChannelSelectorEnabled;
     }
 }

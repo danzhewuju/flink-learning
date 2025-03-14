@@ -178,6 +178,58 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
 
     // --------------------------------------------------------------------------------------------
 
+    public boolean isLoadBasedChannelSelectorEnabled() {
+        return loadBasedChannelSelectorEnabled;
+    }
+
+    public void setLoadBasedChannelSelectorEnabled(boolean loadBasedChannelSelectorEnabled) {
+        this.loadBasedChannelSelectorEnabled = loadBasedChannelSelectorEnabled;
+    }
+
+    public String getLoadBasedChannelSelectorStrategy() {
+        return loadBasedChannelSelectorStrategy;
+    }
+
+    public void setLoadBasedChannelSelectorStrategy(String loadBasedChannelSelectorStrategy) {
+        this.loadBasedChannelSelectorStrategy = loadBasedChannelSelectorStrategy;
+    }
+
+    public int getChannelSelectorStrategyMinUpdateInterval() {
+        return channelSelectorStrategyMinUpdateInterval;
+    }
+
+    public void setChannelSelectorStrategyMinUpdateInterval(
+            int channelSelectorStrategyMinUpdateInterval) {
+        this.channelSelectorStrategyMinUpdateInterval = channelSelectorStrategyMinUpdateInterval;
+    }
+
+    public double getChannelSelectorStrategyThresholdFactor() {
+        return channelSelectorStrategyThresholdFactor;
+    }
+
+    public void setChannelSelectorStrategyThresholdFactor(
+            double channelSelectorStrategyThresholdFactor) {
+        this.channelSelectorStrategyThresholdFactor = channelSelectorStrategyThresholdFactor;
+    }
+
+    public int getChannelSelectorStrategyThresholdUpdateFrequencyCount() {
+        return channelSelectorStrategyThresholdUpdateFrequencyCount;
+    }
+
+    public void setChannelSelectorStrategyThresholdUpdateFrequencyCount(
+            int channelSelectorStrategyThresholdUpdateFrequencyCount) {
+        this.channelSelectorStrategyThresholdUpdateFrequencyCount =
+                channelSelectorStrategyThresholdUpdateFrequencyCount;
+    }
+
+    public boolean isBacklogMetricsEnabled() {
+        return backlogMetricsEnabled;
+    }
+
+    public void setBacklogMetricsEnabled(boolean backlogMetricsEnabled) {
+        this.backlogMetricsEnabled = backlogMetricsEnabled;
+    }
+
     /**
      * Enables the ClosureCleaner. This analyzes user code functions and sets fields to null that
      * are not used. This will in most cases make closures or anonymous inner classes serializable
@@ -273,6 +325,18 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     public long getLatencyTrackingInterval() {
         return configuration.get(MetricOptions.LATENCY_INTERVAL);
     }
+
+    private boolean loadBasedChannelSelectorEnabled = false;
+
+    private String loadBasedChannelSelectorStrategy = "";
+
+    private int channelSelectorStrategyMinUpdateInterval = 0;
+
+    private double channelSelectorStrategyThresholdFactor = 1.3;
+
+    private int channelSelectorStrategyThresholdUpdateFrequencyCount = 50;
+
+    private boolean backlogMetricsEnabled = false;
 
     @Internal
     public boolean isLatencyTrackingConfigured() {
@@ -1154,6 +1218,14 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
         configuration
                 .getOptional(JobManagerOptions.SCHEDULER)
                 .ifPresent(t -> this.configuration.set(JobManagerOptions.SCHEDULER, t));
+
+        configuration
+                .getOptional(ExecutionOptions.LOAD_BASED_CHANNEL_SELECTOR_ENABLED)
+                .ifPresent(this::setLoadBasedChannelSelectorEnabled);
+
+        configuration
+                .getOptional(ExecutionOptions.LOAD_BASED_CHANNEL_SELECTOR_STRATEGY)
+                .ifPresent(this::setLoadBasedChannelSelectorStrategy);
     }
 
     /**

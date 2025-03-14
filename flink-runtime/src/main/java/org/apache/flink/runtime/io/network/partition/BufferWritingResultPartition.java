@@ -101,6 +101,11 @@ public abstract class BufferWritingResultPartition extends ResultPartition {
                         + " this result partition.");
     }
 
+    /** Returns the subpartition with the given index. */
+    public ResultSubpartition getSubpartition(int subpartitionIndex) {
+        return subpartitions[subpartitionIndex];
+    }
+
     @Override
     public int getNumberOfQueuedBuffers() {
         int totalBuffers = 0;

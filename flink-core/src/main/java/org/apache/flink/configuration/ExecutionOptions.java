@@ -163,4 +163,53 @@ public class ExecutionOptions {
                                     + " operators. NOTE: It takes effect only in the BATCH runtime mode and requires sorted inputs"
                                     + SORT_INPUTS.key()
                                     + " to be enabled.");
+
+    public static final ConfigOption<Boolean> LOAD_BASED_CHANNEL_SELECTOR_ENABLED =
+            ConfigOptions.key("execution.load-based-channel-selector.enabled")
+                    .booleanType()
+                    .defaultValue(false)
+                    .withDescription(
+                            "Enable load based strategy to distribute data, "
+                                    + "when partitioner is RescalePartitioner or RebalancePartitioner.");
+
+    public static final ConfigOption<String> LOAD_BASED_CHANNEL_SELECTOR_STRATEGY =
+            ConfigOptions.key("execution.load-based-channel-selector.strategy")
+                    .stringType()
+                    .defaultValue("min")
+                    .withDescription(
+                            "The strategy of load-based-channel-selector. Default is min "
+                                    + "for MinBacklogLoadBasedStrategy, otherwise threshold for ThresholdBacklogLoadBasedStrategy. "
+                                    + "It works when enable the config execution.load-based-channel-selector.enable.");
+
+    public static final ConfigOption<Double> CHANNEL_SELECTOR_STRATEGY_THRESHOLD_FACTOR =
+            ConfigOptions.key("execution.load-based-channel-selector.strategy.threshold.factor")
+                    .doubleType()
+                    .defaultValue(1.3)
+                    .withDescription(
+                            "The factor of threshold. threshold = factor * average of backlogs. "
+                                    + "It works when use threshold strategy.");
+
+    public static final ConfigOption<Integer>
+            CHANNEL_SELECTOR_STRATEGY_THRESHOLD_UPDATE_FREQUENCY_COUNT =
+            ConfigOptions.key(
+                            "execution.load-based-channel-selector.strategy.threshold.update-frequency-count")
+                    .intType()
+                    .defaultValue(1000)
+                    .withDescription(
+                            "The count of update threshold frequency. "
+                                    + "It works when use threshold strategy.");
+
+    public static final ConfigOption<Integer> CHANNEL_SELECTOR_STRATEGY_MIN_UPDATE_INTERVAL =
+            ConfigOptions.key("execution.load-based-channel-selector.strategy.min.update-interval")
+                    .intType()
+                    .defaultValue(0)
+                    .withDescription(
+                            "The interval of update load based strategy. "
+                                    + "It works when the config execution.load-based-channel-selector.strategy is min.");
+
+    public static final ConfigOption<Boolean> BACKLOG_METRICS_ENABLED =
+            ConfigOptions.key("execution.backlog-metrics.enabled")
+                    .booleanType()
+                    .defaultValue(false)
+                    .withDescription("Whether use backlog metric or not.");
 }

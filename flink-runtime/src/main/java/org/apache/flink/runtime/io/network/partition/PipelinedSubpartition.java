@@ -31,6 +31,8 @@ import org.apache.flink.runtime.io.network.buffer.BufferConsumer;
 import org.apache.flink.runtime.io.network.buffer.BufferConsumerWithPartialRecordLength;
 import org.apache.flink.runtime.io.network.logger.NetworkActionsLogger;
 import org.apache.flink.runtime.io.network.partition.consumer.EndOfChannelStateEvent;
+import org.apache.flink.runtime.io.network.partition.listener.BacklogEvent;
+import org.apache.flink.runtime.io.network.partition.listener.BacklogEventListener;
 
 import org.apache.flink.shaded.guava30.com.google.common.collect.Iterators;
 
@@ -132,6 +134,10 @@ public class PipelinedSubpartition extends ResultSubpartition
      */
     @GuardedBy("buffers")
     boolean isBlocked = false;
+
+    /** Listener held by result sub partition to listen backlog changed event. */
+    @Nullable
+    private BacklogEventListener backlogEventListener;
 
     int sequenceNumber = 0;
 
@@ -674,6 +680,15 @@ public class PipelinedSubpartition extends ResultSubpartition
         return Math.max(buffers.size(), 0);
     }
 
+    public void registerListener(BacklogEventListener backlogEventListener) {
+        this.backlogEventListener = backlogEventListener;
+        LOG.info(
+                "Task: {}, subPartition index: {} register a listener {}",
+                parent.getOwningTaskName(),
+                getSubpartitionInfo().getSubPartitionIdx(),
+                backlogEventListener);
+    }
+
     @Override
     public void flush() {
         final boolean notifyDataAvailable;
@@ -720,7 +735,17 @@ public class PipelinedSubpartition extends ResultSubpartition
         assert Thread.holdsLock(buffers);
         if (isBuffer) {
             buffersInBacklog--;
+            notifyChanged();
         }
+    }
+
+    private void notifyChanged() {
+        if (backlogEventListener == null) {
+            return;
+        }
+        BacklogEvent backlogChangedEvent =
+                new BacklogEvent(getSubPartitionIndex(), getBuffersInBacklogUnsafe());
+        backlogEventListener.onChanged(backlogChangedEvent);
     }
 
     /**
@@ -733,6 +758,7 @@ public class PipelinedSubpartition extends ResultSubpartition
 
         if (buffer != null && buffer.isBuffer()) {
             buffersInBacklog++;
+            notifyChanged();
         }
     }
 

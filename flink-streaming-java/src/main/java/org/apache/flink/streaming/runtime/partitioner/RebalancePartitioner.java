@@ -33,7 +33,17 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RebalancePartitioner<T> extends StreamPartitioner<T> {
     private static final long serialVersionUID = 1L;
 
+    private final boolean loadBasedChannelSelectorEnabled;
+
     private int nextChannelToSendTo;
+
+    public RebalancePartitioner() {
+        this(false);
+    }
+
+    public RebalancePartitioner(boolean loadBasedChannelSelectorEnabled) {
+        this.loadBasedChannelSelectorEnabled = loadBasedChannelSelectorEnabled;
+    }
 
     @Override
     public void setup(int numberOfChannels) {
@@ -65,5 +75,10 @@ public class RebalancePartitioner<T> extends StreamPartitioner<T> {
     @Override
     public String toString() {
         return "REBALANCE";
+    }
+
+    @Override
+    public boolean isLoadBasedChannelSelectorEnabled() {
+        return loadBasedChannelSelectorEnabled;
     }
 }

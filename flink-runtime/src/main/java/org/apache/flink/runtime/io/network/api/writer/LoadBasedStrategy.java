@@ -21,14 +21,13 @@ package org.apache.flink.runtime.io.network.api.writer;
 import org.apache.flink.core.io.IOReadableWritable;
 
 /**
- * The {@link ChannelSelector} determines to which logical channels a record should be written to.
- *
- * @param <T> the type of record which is sent through the attached output gate
+ * The {@link LoadBasedStrategy} determines to which logical channels a record should be written to
+ * by load based strategy.
  */
-public interface ChannelSelector<T extends IOReadableWritable> {
+public interface LoadBasedStrategy {
 
     /**
-     * Initializes the channel selector with the number of output channels.
+     * Initializes the load based strategy with the number of output channels.
      *
      * @param numberOfChannels the total number of output channels which are attached to respective
      *     output gate.
@@ -36,29 +35,33 @@ public interface ChannelSelector<T extends IOReadableWritable> {
     void setup(int numberOfChannels);
 
     /**
-     * Returns the logical channel index, to which the given record should be written. It is illegal
-     * to call this method for broadcast channel selectors and this method can remain not
-     * implemented in that case (for example by throwing {@link UnsupportedOperationException}).
+     * Returns the logical channel index, to which the given record should be written.
      *
      * @param record the record to determine the output channels for.
      * @return an integer number which indicates the index of the output channel through which the
      *     record shall be forwarded.
      */
-    int selectChannel(T record);
+    int select(final IOReadableWritable record);
 
     /**
-     * Returns whether the channel selector always selects all the output channels.
+     * Update the strategy.
      *
-     * @return true if the selector is for broadcast mode.
+     * @param obj
      */
-    boolean isBroadcast();
+    void update(Object obj);
 
     /**
-     * Returns the channel selector always based on the load of the subpartition.
+     * Get the next channel to send by round robin.
      *
-     * @return true if the selector is for load based mode.
+     * @param lastChannelToSendTo the last channel to send
+     * @param numberOfChannels the number of channel
+     * @return the next channel to send by round robin.
      */
-    default boolean isLoadBasedChannelSelectorEnabled() {
-        return false;
+    default int nextChannel(int lastChannelToSendTo, int numberOfChannels) {
+        int nextChannelToSendTo = lastChannelToSendTo + 1;
+        if (nextChannelToSendTo >= numberOfChannels) {
+            nextChannelToSendTo = 0;
+        }
+        return nextChannelToSendTo;
     }
 }

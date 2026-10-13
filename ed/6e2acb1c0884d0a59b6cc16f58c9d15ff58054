@@ -1,0 +1,28 @@
+flink-runtime/src/main/java/org/apache/flink/runtime/rest/handler/job/rescales/JobRescaleDetailsHandler.java
+  s_414b816b27fa9a::t_ef6b26a42c7e38 104-106,117
+flink-runtime/src/test/java/org/apache/flink/runtime/rest/handler/job/rescales/JobRescaleDetailsHandlerTest.java
+  s_414b816b27fa9a::t_83fd924f103cbe 51-52,55-56,168-186,209-217,221-230,233-245,257-263,265-269
+  s_414b816b27fa9a::t_0dbaf52aab872e 188-208,218-220,246-248,270-280
+  s_414b816b27fa9a::t_137895d53c68b6 187,231-232,264
+flink-runtime/src/main/java/org/apache/flink/runtime/scheduler/adaptive/timeline/RescalesStatsSnapshot.java
+  s_414b816b27fa9a::t_31360c623a8ad0 67
+  s_414b816b27fa9a::t_cb45b1b2966ab4 54
+  s_414b816b27fa9a::t_ed52433f5514e7 47,51-53
+  s_414b816b27fa9a::t_def5d71de6a892 28,48-50,66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.49-trip",
+  "base_commit_sha": "ed6e2acb1c0884d0a59b6cc16f58c9d15ff58054",
+  "prompts": {},
+  "sessions": {
+    "s_414b816b27fa9a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1337d-af04-7ef3-a06c-75764e96b863",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "danzhewuju <danyuhao@qq.com>"
+    }
+  }
+}

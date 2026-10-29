@@ -1,0 +1,46 @@
+flink-formats/flink-json/src/main/java/org/apache/flink/formats/json/JsonRowDataDeserializationSchema.java
+  s_73493119fc4b07::t_48d05875874501 49-50,64-71,112-113
+flink-formats/flink-json/src/main/java/org/apache/flink/formats/json/JsonFormatFactory.java
+  s_73493119fc4b07::t_48d05875874501 87,89-98,100-106,108-109
+flink-formats/flink-json/src/main/java/org/apache/flink/formats/json/JsonParserRowDataDeserializationSchema.java
+  s_73493119fc4b07::t_48d05875874501 46-47,71,73-79,113-114
+docs/content/docs/connectors/table/formats/json.md
+  s_73493119fc4b07::t_1c6344fe9bca78 263-266,270
+flink-formats/flink-json/src/test/java/org/apache/flink/formats/json/JsonParseErrorMetricsTest.java
+  s_73493119fc4b07::t_1c6344fe9bca78 64,100-101,121-122
+  s_73493119fc4b07::t_0d3954c5f0cbdc 1-53,56-57,61-63,65-80,84-94,98-99,104-105,111-114,116-117,119-120,123-127
+  s_73493119fc4b07::t_6c61dbbcac4200 54-55,60,83,97,102,107-110,115,118
+flink-formats/flink-json/src/main/java/org/apache/flink/formats/json/AbstractJsonDeserializationSchema.java
+  s_73493119fc4b07::t_54f8eae5a9218d 133-134
+  h_2532526eac8ac9 119,121-122,131-132,135,143
+  s_73493119fc4b07::t_48d05875874501 25,84-89,120,123-130,136-142,188,195-200
+flink-formats/flink-json/src/main/java/org/apache/flink/formats/json/JsonParserToRowDataConverters.java
+  s_73493119fc4b07::t_48d05875874501 89
+flink-formats/flink-json/src/main/java/org/apache/flink/formats/json/JsonToRowDataConverters.java
+  s_73493119fc4b07::t_48d05875874501 87
+flink-formats/flink-json/src/test/java/org/apache/flink/formats/json/JsonFormatFactoryTest.java
+  s_73493119fc4b07::t_48d05875874501 168,256,270
+docs/content.zh/docs/connectors/table/formats/json.md
+  s_73493119fc4b07::t_1c6344fe9bca78 250-251,256
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.51-trip",
+  "base_commit_sha": "cd89be63faa4cd5ae011237642f8b3e1acec9c07",
+  "prompts": {},
+  "humans": {
+    "h_2532526eac8ac9": {
+      "author": "danzhewuju <danyuhao@qq.com>"
+    }
+  },
+  "sessions": {
+    "s_73493119fc4b07": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1864e-49c3-7381-8416-08c19d45f484",
+        "model": "auto/gpt-6-astra"
+      },
+      "human_author": "danzhewuju <danyuhao@qq.com>"
+    }
+  }
+}

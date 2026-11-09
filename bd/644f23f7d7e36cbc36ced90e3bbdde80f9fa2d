@@ -1,0 +1,28 @@
+flink-metrics/flink-metrics-otel/src/test/java/org/apache/flink/metrics/otel/OpenTelemetryMetricAdapterTest.java
+  s_21d51c92aeab73::t_1fbccf13215e30 49
+  s_21d51c92aeab73::t_25f5b70c2b660d 122-149
+  s_21d51c92aeab73::t_4e3fac733618a6 41-43
+flink-metrics/flink-metrics-otel/src/main/java/org/apache/flink/metrics/otel/OpenTelemetryMetricAdapter.java
+  s_21d51c92aeab73::t_b9946e1eb94e19 103-104,108-109,112
+flink-metrics/flink-metrics-otel/src/test/java/org/apache/flink/metrics/otel/OpenTelemetryMetricReporterTest.java
+  s_21d51c92aeab73::t_7db9f95bf984b5 134-150,153-158,163-164
+  s_21d51c92aeab73::t_328b9a4f13769c 151-152,159-162
+  s_21d51c92aeab73::t_22d062b86e5d96 22
+  s_21d51c92aeab73::t_8b5b8bcc18bd53 46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "bd644f23f7d7e36cbc36ced90e3bbdde80f9fa2d",
+  "prompts": {},
+  "sessions": {
+    "s_21d51c92aeab73": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-a683eb09-8acf-452b-8148-c7de44d0d15b",
+        "model": "auto/gpt-6.1-sol"
+      },
+      "human_author": "danzhewuju <danyuhao@qq.com>"
+    }
+  }
+}

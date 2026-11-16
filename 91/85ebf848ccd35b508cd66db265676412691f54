@@ -1,0 +1,22 @@
+flink-table/flink-table-planner/src/test/java/org/apache/flink/connector/file/table/FileSystemTableSourceWithPartitionsITCase.java
+  s_e0af839f6fce2d::t_ac78b3da6b8601 129-131
+  s_e0af839f6fce2d::t_396a74894de597 96-128,132-134
+flink-connectors/flink-connector-files/src/main/java/org/apache/flink/connector/file/table/FileSystemTableSource.java
+  s_e0af839f6fce2d::t_bbbea435580b3c 451-452
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "9185ebf848ccd35b508cd66db265676412691f54",
+  "prompts": {},
+  "sessions": {
+    "s_e0af839f6fce2d": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-8ae0113d-d202-4010-8ed8-616aa0f9bc49",
+        "model": "codex/gpt-6.1-sol"
+      },
+      "human_author": "danzhewuju <danyuhao@qq.com>"
+    }
+  }
+}

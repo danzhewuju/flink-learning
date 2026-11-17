@@ -1,0 +1,26 @@
+flink-table/flink-table-api-java/src/main/java/org/apache/flink/table/catalog/FileCatalogStore.java
+  s_25c97684e18082::t_e54b0adee9d633 128
+flink-table/flink-table-api-java/src/test/java/org/apache/flink/table/catalog/FileCatalogStoreTest.java
+  s_25c97684e18082::t_b69044f4b492e0 164,169-170,174-175
+  s_25c97684e18082::t_a59bc97ab2439b 24
+  s_25c97684e18082::t_0af0a11ab73f95 21
+  s_25c97684e18082::t_07091f8205ff4f 34-35
+  s_25c97684e18082::t_9065f482bab412 114-151,153-163,165-168,171-173,176-181
+  s_25c97684e18082::t_e9c0ed98ede4be 152
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "e15b483396b5f074bfe63a78389ab01eeb3c88ad",
+  "prompts": {},
+  "sessions": {
+    "s_25c97684e18082": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-ec27f457-3dbf-425d-8c5c-29067bd04699",
+        "model": "codex/gpt-6-astra"
+      },
+      "human_author": "Alex <danyuhao@qq.com>"
+    }
+  }
+}
